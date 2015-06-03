@@ -1,21 +1,25 @@
 package de.uni_freiburg.proglang;
 
-import static de.uni_freiburg.proglang.HuiRegExp.concatenate;
-import static de.uni_freiburg.proglang.HuiRegExp.makechar;
-import static de.uni_freiburg.proglang.HuiRegExp.star;
-import static de.uni_freiburg.proglang.HuiRegExp.union;
 import hui.NBA;
-
-import java.util.HashSet;
+import dk.brics.automaton.Automaton;
+import dk.brics.automaton.RegExpHelper;
 
 public class test {
 
 	public static void main(String[] args) {
-				
-			testomegalinearfactor1();
-			testomegalinearfactor2();
+			
 		
+//			testomegalinearfactor1();
+//			testomegalinearfactor2();
+		
+			testregexp();
 	}	
+
+	private static void testregexp() {
+		HuiRegExp charX = HuiRegExp.makechar('X');
+		Automaton aut = RegExpHelper.HuiRegExpToAutomaton(charX);
+		System.out.println(aut.toDot());
+	}
 
 	static void testlinearfactor() {		
 		

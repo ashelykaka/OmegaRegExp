@@ -19,10 +19,11 @@ public class HuiRegExp {
 		REGEXP_EMPTYSTRING,
 	}
 	
-	Kind kind;
-	HuiRegExp exp1, exp2;
+	public Kind kind;
+	public HuiRegExp exp1, exp2;
 //	String s;
-	char c;
+	public char c;
+	
 //	int min, max, digits;
 //	char from, to;
 //	

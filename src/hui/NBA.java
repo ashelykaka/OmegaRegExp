@@ -4,6 +4,7 @@ import java.util.Set;
 
 import de.uni_freiburg.proglang.HuiRegExp;
 import de.uni_freiburg.proglang.OmegaLinearFactor;
+import dk.brics.automaton.Automaton;
 import dk.brics.automaton.Transition;
 
 public class NBA  {
@@ -17,6 +18,15 @@ public class NBA  {
 		allStates = new HashSet<nbaState>();
 		finalStates = new HashSet<nbaState>();
 
+    }
+	
+	public NBA(Automaton a) {
+		// Just assume NFA must fulfill condition (1)
+		// task 2
+	}
+	
+	public NBA(Automaton a, NBA b) {
+	    // task 4
 	}
 
 	@Override

@@ -174,4 +174,14 @@ public class MarkPushbackReader extends PushbackReader {
 			return "*** Unknown";
 		}
 	}
+	
+	int peak() throws IOException {
+		int c = super.read();
+		if (c == -1) {
+			return c;
+		} else {
+			super.unread(c);
+			return c;
+		}
+	}
 }

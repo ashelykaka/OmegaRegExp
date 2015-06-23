@@ -20,11 +20,12 @@ public class MarkPushbackReaderTest {
 		mpr.read();
 		assertTrue(mpr.atEnd());
 		mpr.reset();
-		assertEquals("c",mpr.toString());
+		assertEquals('c',mpr.peak());
 		mpr.reset();
-		assertEquals("bc",mpr.toString());
+		assertEquals('b',mpr.peak());
 		mpr.reset();
-		assertEquals("abc",mpr.toString());
+		assertEquals('a',mpr.peak());
+		mpr.close();
 	}
 
 }

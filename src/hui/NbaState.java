@@ -4,14 +4,14 @@ import de.uni_freiburg.proglang.OmegaLinearFactor;
 import dk.brics.automaton.State;
 
 @SuppressWarnings("serial")
-public class nbaState extends State {
+public class NbaState extends State {
 	OmegaLinearFactor omegaLinearFactor;
 	 @Override
 	public String toString() {
 		return "nbaState [omegaLinearFactor=" + omegaLinearFactor +  "]\n";
 	}
 
-	public nbaState(OmegaLinearFactor s2) {
+	public NbaState(OmegaLinearFactor s2) {
 			super();
 			this.omegaLinearFactor = s2;
 		}
@@ -33,7 +33,7 @@ public class nbaState extends State {
 			return true;
 		if (getClass() != obj.getClass())
 			return false;
-		nbaState other = (nbaState) obj;
+		NbaState other = (NbaState) obj;
 		if (omegaLinearFactor == null) {
 			if (other.omegaLinearFactor != null)
 				return false;

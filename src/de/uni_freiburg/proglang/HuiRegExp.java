@@ -160,7 +160,7 @@ public class HuiRegExp {
 		charone.kind = HuiRegExp.Kind.REGEXP_CHAR;		
 		return charone;
 	}
-
+	
 	public Set<Character> getIdentifiers() {
 		HashSet<Character> res = new HashSet<Character>();
 		switch (this.kind) {
@@ -184,5 +184,23 @@ public class HuiRegExp {
 		}
 		
 		return res;
+	}
+
+	/**
+	 * @return Creates a regular expression representing the empty language.
+	 */
+	public static HuiRegExp makeEmpty() {
+		HuiRegExp r = new HuiRegExp();
+		r.kind = Kind.REGEXP_EMPTY;
+		return r;
+	}
+	
+	/**
+	 * @return Creates a regular expression representing the empty string.
+	 */
+	public static HuiRegExp makeEpsilon() {
+		HuiRegExp r = new HuiRegExp();
+		r.kind = Kind.REGEXP_EMPTYSTRING;
+		return r;
 	}
 }

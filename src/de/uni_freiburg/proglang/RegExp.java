@@ -12,6 +12,8 @@ import dk.brics.automaton.Automaton;
 
 
 public class RegExp {
+	private RegExp r;
+
 	public enum Kind {
 		REGEXP_UNION,
 		REGEXP_CONCATENATION,
@@ -198,7 +200,5 @@ public class RegExp {
 		return r;
 	}
 
-	public Automaton toAutomaton() {
-		return this.toAutomaton();
-	}
+
 }

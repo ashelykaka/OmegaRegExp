@@ -1,10 +1,10 @@
 package dk.brics.automaton;
 
-import de.uni_freiburg.proglang.HuiRegExp;
+import de.uni_freiburg.proglang.RegExp;
 
 public class RegExpHelper {
 
-	public static RegExp createRegExpFromHuiRegExp(HuiRegExp r) {
+	public static RegExp createRegExpFromHuiRegExp(RegExp r) {
 		switch (r.kind) {
 		case REGEXP_CHAR:
 			return RegExp.makeChar(r.c);
@@ -19,7 +19,7 @@ public class RegExpHelper {
 			return RegExp.makeEmpty();
 		case REGEXP_STAR:
 			r1 = createRegExpFromHuiRegExp(r.exp1);
-			return RegExp.makeRepeat(r1);
+			return RegExp.makeStar(r1);
 		case REGEXP_UNION:
 			r1 = createRegExpFromHuiRegExp(r.exp1);
 			r2 = createRegExpFromHuiRegExp(r.exp2);
@@ -29,7 +29,8 @@ public class RegExpHelper {
 		}
 	}
 	
-	public static Automaton HuiRegExpToAutomaton(HuiRegExp r) {
+	public static Automaton HuiRegExpToAutomaton(RegExp r) {
+		
 		return createRegExpFromHuiRegExp(r).toAutomaton();
 	}
 	

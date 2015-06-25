@@ -16,15 +16,15 @@ public class NBATest {
 	}	
 
 	private static void testregexp() {
-		RegExp chara = RegExp.makeChar('a');				
+		SimpleRegExp chara = SimpleRegExp.makeChar('a');				
 		//char y
-		RegExp charb = RegExp.makeChar('b');		
+		SimpleRegExp charb = SimpleRegExp.makeChar('b');		
 	
-		RegExp  expleft =  RegExp.makeUnion(chara,charb);
-		RegExp  expstar =  RegExp.makeStar(expleft);
+		SimpleRegExp  expleft =  SimpleRegExp.makeUnion(chara,charb);
+		SimpleRegExp  expstar =  SimpleRegExp.makeStar(expleft);
 		
-		RegExp exptotal = RegExp.makeConcatenation(expstar, charb);	
-		Automaton aut = RegExpHelper.HuiRegExpToAutomaton(exptotal);
+		SimpleRegExp exptotal = SimpleRegExp.makeConcatenation(expstar, charb);	
+		Automaton aut = RegExpHelper.SimpleRegExpToAutomaton(exptotal);
 		System.out.println(aut.getAcceptStates());
 		System.out.println(aut.toDot());
 	}
@@ -32,18 +32,18 @@ public class NBATest {
 	static void testlinearfactor() {		
 		
 		//char x
-		RegExp charX = RegExp.makeChar('X');				
+		SimpleRegExp charX = SimpleRegExp.makeChar('X');				
 		//char y
-		RegExp charY = RegExp.makeChar('Y');		
+		SimpleRegExp charY = SimpleRegExp.makeChar('Y');		
 	
-		RegExp  expleft =  RegExp.makeStar(charX);
+		SimpleRegExp  expleft =  SimpleRegExp.makeStar(charX);
 		
-		RegExp expXX = RegExp.makeConcatenation(charX, charX);		
-		RegExp expystar = RegExp.makeStar(charY);
+		SimpleRegExp expXX = SimpleRegExp.makeConcatenation(charX, charX);		
+		SimpleRegExp expystar = SimpleRegExp.makeStar(charY);
 		
-		RegExp expright = RegExp.makeUnion(expXX, expystar);
+		SimpleRegExp expright = SimpleRegExp.makeUnion(expXX, expystar);
 		
-		RegExp expall = RegExp.makeConcatenation(expleft, expright);
+		SimpleRegExp expall = SimpleRegExp.makeConcatenation(expleft, expright);
 		
 		System.out.println(expall);
 		
@@ -52,30 +52,30 @@ public class NBATest {
 		
 	}
 	private static void testomegalinearfactor1() {
-		RegExp chara = RegExp.makeChar('a');				
+		SimpleRegExp chara = SimpleRegExp.makeChar('a');				
 		//char y
-		RegExp charb = RegExp.makeChar('b');		
+		SimpleRegExp charb = SimpleRegExp.makeChar('b');		
 	
-		RegExp  expleft =  RegExp.makeUnion(chara,charb);
-		RegExp  expstar =  RegExp.makeStar(expleft);
+		SimpleRegExp  expleft =  SimpleRegExp.makeUnion(chara,charb);
+		SimpleRegExp  expstar =  SimpleRegExp.makeStar(expleft);
 		
-		RegExp exptotal = RegExp.makeConcatenation(expstar, charb);	
+		SimpleRegExp exptotal = SimpleRegExp.makeConcatenation(expstar, charb);	
 		System.out.println(exptotal);
 		NBA nba = new NBA(expstar, charb);
 		System.out.println(nba);
 
 	}
 	private static void testomegalinearfactor2() {
-		RegExp chara = RegExp.makeChar('a');				
+		SimpleRegExp chara = SimpleRegExp.makeChar('a');				
 		//char y
-		RegExp charb = RegExp.makeChar('b');		
+		SimpleRegExp charb = SimpleRegExp.makeChar('b');		
 	
-		RegExp  expleft =  RegExp.makeUnion(chara,charb);
-		RegExp  expstar =  RegExp.makeStar(expleft);
-		RegExp  charbstar =  RegExp.makeStar(charb);
-		RegExp expright = RegExp.makeConcatenation(charb, charbstar);	
+		SimpleRegExp  expleft =  SimpleRegExp.makeUnion(chara,charb);
+		SimpleRegExp  expstar =  SimpleRegExp.makeStar(expleft);
+		SimpleRegExp  charbstar =  SimpleRegExp.makeStar(charb);
+		SimpleRegExp expright = SimpleRegExp.makeConcatenation(charb, charbstar);	
 		
-		RegExp exptotal = RegExp.makeConcatenation(expstar, expright);	
+		SimpleRegExp exptotal = SimpleRegExp.makeConcatenation(expstar, expright);	
 		System.out.println(exptotal);
 		
 		NBA nba = new NBA(expstar, expright);

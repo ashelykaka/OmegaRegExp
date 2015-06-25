@@ -1,35 +1,35 @@
 package dk.brics.automaton;
 
-import de.uni_freiburg.proglang.RegExp;
+import de.uni_freiburg.proglang.SimpleRegExp;
 
 public class RegExpHelper {
 
-	public static RegExp createRegExpFromHuiRegExp(RegExp r) {
+	public static SimpleRegExp createRegExpFromHuiRegExp(SimpleRegExp r) {
 		switch (r.kind) {
 		case REGEXP_CHAR:
-			return RegExp.makeChar(r.c);
+			return SimpleRegExp.makeChar(r.c);
 		case REGEXP_CONCATENATION:
-			RegExp r1 = createRegExpFromHuiRegExp(r.exp1);
-			RegExp r2 = createRegExpFromHuiRegExp(r.exp2);
-			return RegExp.makeConcatenation(r1,r2);
+			SimpleRegExp r1 = createRegExpFromHuiRegExp(r.exp1);
+			SimpleRegExp r2 = createRegExpFromHuiRegExp(r.exp2);
+			return SimpleRegExp.makeConcatenation(r1,r2);
 		case REGEXP_EMPTY:
 			//return RegExp.makeEmpty();
 			throw new IllegalArgumentException("Not supported");
 		case REGEXP_EMPTYSTRING:
-			return RegExp.makeEmpty();
+			return SimpleRegExp.makeEmpty();
 		case REGEXP_STAR:
 			r1 = createRegExpFromHuiRegExp(r.exp1);
-			return RegExp.makeStar(r1);
+			return SimpleRegExp.makeStar(r1);
 		case REGEXP_UNION:
 			r1 = createRegExpFromHuiRegExp(r.exp1);
 			r2 = createRegExpFromHuiRegExp(r.exp2);
-			return RegExp.makeUnion(r1,r2);
+			return SimpleRegExp.makeUnion(r1,r2);
 		default:
 			throw new IllegalArgumentException("Not supported");
 		}
 	}
 	
-	public static Automaton HuiRegExpToAutomaton(RegExp r) {
+	public static Automaton HuiRegExpToAutomaton(SimpleRegExp r) {
 		
 		return createRegExpFromHuiRegExp(r).toAutomaton();
 	}

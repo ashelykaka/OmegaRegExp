@@ -8,15 +8,15 @@ import dk.brics.automaton.Automaton;
 import dk.brics.automaton.Transition;
 
 public class NBA  {
-	private Set<nbaState> initial;
-	private Set<nbaState> allStates;
-	private Set<nbaState> finalStates;
+	private Set<NbaState> initial;
+	private Set<NbaState> allStates;
+	private Set<NbaState> finalStates;
 	HashSet<Character> identifiers = new HashSet<Character>();	  
 
 	public NBA() {
-		initial = new HashSet<nbaState>();
-		allStates = new HashSet<nbaState>();
-		finalStates = new HashSet<nbaState>();
+		initial = new HashSet<NbaState>();
+		allStates = new HashSet<NbaState>();
+		finalStates = new HashSet<NbaState>();
 
     }
 	
@@ -33,10 +33,10 @@ public class NBA  {
 	public String toString() {
 		String s =  " NBA [ allStates=" + allStates+ "\n identifiers =" + identifiers ;
 
-		for (nbaState nbaState : allStates) {
+		for (NbaState nbaState : allStates) {
 			s+= ("\nfrom  " + nbaState + " Transactions: to");
 			for (Character c : identifiers) {
-				Set<nbaState> transationStates = trans (nbaState, c);
+				Set<NbaState> transationStates = trans (nbaState, c);
 				if(!transationStates.isEmpty())
 					s+= (" nbaState: " + transationStates + " \n");
 			}
@@ -45,16 +45,16 @@ public class NBA  {
 		s += ( "\n initial=" + initial + "\n finalStates=" + finalStates +"]");
 		return s;
 	}
-	public Set<nbaState> getInitial() {
+	public Set<NbaState> getInitial() {
 		return initial;
 	}
-	public void setInitial(Set<nbaState> set) {
+	public void setInitial(Set<NbaState> set) {
 		this.initial = set;
 	}
-	public Set<nbaState> getNbaStates() {
+	public Set<NbaState> getNbaStates() {
 		return allStates;
 	}
-	public void setNbaStates(Set<nbaState> states) {
+	public void setNbaStates(Set<NbaState> states) {
 		this.allStates = states;
 	}
 
@@ -64,10 +64,10 @@ public class NBA  {
 		Set<OmegaLinearFactor> nbaInitialStates = OmegaLinearFactor.compute(re, re1);
 		Set<OmegaLinearFactor> nbaInitialStates2 = OmegaLinearFactor.compute(re, re1);
 		for (OmegaLinearFactor omegaLinearFactor : nbaInitialStates) {
-			initial.add(new nbaState(omegaLinearFactor));
+			initial.add(new NbaState(omegaLinearFactor));
 		}
 		for (OmegaLinearFactor omegaLinearFactor : nbaInitialStates2) {
-			allStates.add(new nbaState(omegaLinearFactor));
+			allStates.add(new NbaState(omegaLinearFactor));
 		}
 		//NbaStates are all states that appear in Omega_automata
 
@@ -76,22 +76,22 @@ public class NBA  {
 
 
 		//continues to get new states 
-		Set<nbaState> newTransationStates = null;
+		Set<NbaState> newTransationStates = null;
 		do {
-			newTransationStates = new HashSet<nbaState>();
-			for (nbaState state : allStates) {
+			newTransationStates = new HashSet<NbaState>();
+			for (NbaState state : allStates) {
 
 				//					System.out.println(allStates);
 
 				for (Character c : identifiers) {
 					//get new transationStates
-					Set<nbaState> transationStates = trans (state, c);
-					for (nbaState nbaState : transationStates) {
+					Set<NbaState> transationStates = trans (state, c);
+					for (NbaState nbaState : transationStates) {
 						if (!allStates.contains(nbaState))
 							newTransationStates.add(nbaState) ;							
 					}
 					//testing all the possible transitions 
-					for (nbaState transationState : transationStates) {
+					for (NbaState transationState : transationStates) {
 						state.addTransition(new Transition(c, transationState));
 					}
 				}
@@ -100,7 +100,7 @@ public class NBA  {
 			allStates.addAll(newTransationStates);
 		} while (!newTransationStates.isEmpty());
 
-		for (nbaState State : allStates) {
+		for (NbaState State : allStates) {
 			if(State.omegaLinearFactor.g == true)
 				finalStates.add(State);
 
@@ -109,12 +109,12 @@ public class NBA  {
 
 
 	//if the first char fits,then return all states of Omega_LF(r.s^w)	
-	public Set<nbaState> trans(nbaState state, char id) {
-		Set<nbaState> result = new HashSet<nbaState>();
+	public Set<NbaState> trans(NbaState state, char id) {
+		Set<NbaState> result = new HashSet<NbaState>();
 		if (state.omegaLinearFactor.symbol==id ) {
 			Set<OmegaLinearFactor> compute = OmegaLinearFactor.compute(state.omegaLinearFactor.r, state.omegaLinearFactor.s);
 			for (OmegaLinearFactor omegaLinearFactor : compute) {
-				result.add(new nbaState(omegaLinearFactor));
+				result.add(new NbaState(omegaLinearFactor));
 			}
 		} 
 		return result;

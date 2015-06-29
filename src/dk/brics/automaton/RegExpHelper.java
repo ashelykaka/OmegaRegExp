@@ -34,7 +34,7 @@ public class RegExpHelper {
 	}
 	
 	public static void enforceCondition(Automaton a) {
-		State q0 = a.getInitialState();
+		// State q0 = a.getInitialState();
 		// task 1
 	}
 }

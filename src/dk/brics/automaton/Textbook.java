@@ -1,7 +1,6 @@
 package dk.brics.automaton;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -13,24 +12,19 @@ public class Textbook {
 		this.a = a;
 	}
 
+	/**
+	 * Create the union of two NBAs.
+	 * @param a2 The other NBA to union with.
+	 * @return The union.
+	 */
 	public Textbook nbaUnion(Textbook a2) {
-		//		textbook union = new textbook();
-		//		Set<State> initialStates = new HashSet<State>();
-		//		initialStates.addAll(a1.getInitial());
-		//		initialStates.addAll(a2.getInitial());
-		//		union.setInitial(initialStates);
-		//		Set<State> allStates = new HashSet<State>();
-		//		allStates.addAll(a1.getStates());
-		//		allStates.addAll(a2.getStates());
-		//		union.setStates(allStates);
-		//		// how about final state.
-		//		return union;
-
 		return new Textbook(this.a.union(a2.a));
 	}
 
-	// change the nfa into which has no incoming transitions and is not final
-	// state
+	/**
+	 * Adjusts the NFA such that the initial state(s) have no incoming
+	 * transitions and are not final.
+	 */
 	public void fixCondition() {
 		if (!this.isValid()) {
 			State initialState = this.a.getInitialState();
@@ -43,10 +37,12 @@ public class Textbook {
 				newInitState.addTransition(transition);
 			}
 		}
-
 	}
 
-	// generate w-operator for NFA
+	/**
+	 * Omega-close given NFA. We introduce transitions from pre-final states to
+	 * initial states.
+	 */
 	public void nbaOmega() {
 		fixCondition();
 
@@ -56,17 +52,10 @@ public class Textbook {
 		HashMap<State, Transition> newTrans = new HashMap<State, Transition>();
 
 		for (State state : liveStates) {
-			// System.out.println(state);
 
 			Set<Transition> transitions = state.getTransitions();
 			for (Transition transition : transitions) {
-				// System.out.println(state + "we have transitions  "
-				// + transition.getDest());
 				if (transition.getDest().isAccept()) {
-					System.out.println("one step before final state  " + state
-							+ " with final state " + transition.getDest()
-							+ " and symbol " + transition.getMin() + " "
-							+ transition.getMax());
 					Transition t1 = new Transition(transition.getMin(),
 							transition.getMax(), initialState);
 					newTrans.put(state, t1);
@@ -88,7 +77,11 @@ public class Textbook {
 		}
 	}
 
-	// test whether initial state has incoming edge
+	/**
+	 * Test whether initial state has incoming edge.
+	 * 
+	 * @return True if it has.
+	 */
 	private boolean isValid() {
 		State initialState = this.a.getInitialState();
 		Set<State> liveStates = this.a.getLiveStates();
@@ -103,6 +96,15 @@ public class Textbook {
 		return true;
 	}
 
+	/**
+	 * Concatenates an NFA and a NBA s.
+	 * 
+	 * @param r
+	 *            The NFA.
+	 * @param s
+	 *            The NBA.
+	 * @return Returns an NBA.
+	 */
 	public static Textbook nbaConcat(Automaton r, Textbook s) {
 
 		Set<State> liveStates = r.getLiveStates();
@@ -110,17 +112,10 @@ public class Textbook {
 		HashMap<State, Transition> newTrans = new HashMap<State, Transition>();
 
 		for (State state : liveStates) {
-			// System.out.println(state);
 
 			Set<Transition> transitions = state.getTransitions();
 			for (Transition transition : transitions) {
-				// System.out.println(state + "we have transitions  "
-				// + transition.getDest());
 				if (transition.getDest().isAccept()) {
-					System.out.println("one step before final state  " + state
-							+ " with final state " + transition.getDest()
-							+ " and symbol " + transition.getMin() + " "
-							+ transition.getMax());
 					Transition t1 = new Transition(transition.getMin(),
 							transition.getMax(), s.a.getInitialState());
 					newTrans.put(state, t1);
@@ -138,46 +133,44 @@ public class Textbook {
 
 			from.addTransition(t);
 		}
-			s.a.setInitialState(r.getInitialState());
+		s.a.setInitialState(r.getInitialState());
 
-			State initialState = s.a.getInitialState();
-			System.out.println("initialState "+ initialState);
+		State initialState = s.a.getInitialState();
+		System.out.println("initialState " + initialState);
 
-//			System.out.println("s "+ s);
-			return s;
-			//		return null;
-		}
-
-		public static void main(String[] args) {
-			RegExp epr = new RegExp("(a|b)*b");
-			RegExp epr2 = new RegExp("a*");
-			// epr = new RegExp("a*(c|d|e)");
-			RegExp epr3 = new RegExp("(ab)*");
-
-			Automaton automaton = epr.toAutomaton();
-//			Textbook nba = new Textbook(automaton);
-			Textbook nba2 = new Textbook(epr2.toAutomaton());
-//			nba.nbaOmega();
-			nba2.nbaOmega();
-			System.out.println("NFA "+ automaton.toDot());
-//			System.out.println("(ab)* "+ epr3.toAutomaton().toDot());
-//			System.out.println("(ab)w "+ nba2.toDot());
-
-			System.out.println(Textbook.nbaConcat(automaton, nba2).toDot());
-
-			//		Textbook newnba = nba.nbaUnion(nba2);
-			//		System.out.println(nba.toDot());
-					System.out.println(nba2.toDot());
-		}
-
-		@Override
-		public String toString() {
-			return "textbook [initial=" + this.a.getInitialState() + ", states="
-					+ this.a.getStates() + "]";
-		}
-
-		public String toDot() {
-			return a.toDot();
-		}
-
+		return s;
 	}
+
+	public static void main(String[] args) {
+		RegExp epr = new RegExp("(a|b)*b");
+		RegExp epr2 = new RegExp("a*");
+		// epr = new RegExp("a*(c|d|e)");
+//		RegExp epr3 = new RegExp("(ab)*");
+
+		Automaton automaton = epr.toAutomaton();
+		// Textbook nba = new Textbook(automaton);
+		Textbook nba2 = new Textbook(epr2.toAutomaton());
+		// nba.nbaOmega();
+		nba2.nbaOmega();
+		System.out.println("NFA " + automaton.toDot());
+		// System.out.println("(ab)* "+ epr3.toAutomaton().toDot());
+		// System.out.println("(ab)w "+ nba2.toDot());
+
+		System.out.println(Textbook.nbaConcat(automaton, nba2).toDot());
+
+		// Textbook newnba = nba.nbaUnion(nba2);
+		// System.out.println(nba.toDot());
+		System.out.println(nba2.toDot());
+	}
+
+	@Override
+	public String toString() {
+		return "textbook [initial=" + this.a.getInitialState() + ", states="
+				+ this.a.getStates() + "]";
+	}
+
+	public String toDot() {
+		return a.toDot();
+	}
+
+}

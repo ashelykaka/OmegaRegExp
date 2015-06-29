@@ -1,7 +1,6 @@
 package dk.brics.automaton;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -127,7 +126,7 @@ public class ClassicNBAApproach {
 	public static void main(String[] args) {
 		RegExp epr = new RegExp("(a|b)*b");
 		RegExp epr2 = new RegExp("a*");
-		RegExp epr3 = new RegExp("(ab)*");
+//		RegExp epr3 = new RegExp("(ab)*");
 
 		Automaton automaton = epr.toAutomaton();
 		ClassicNBAApproach nba2 = new ClassicNBAApproach(epr2.toAutomaton());
